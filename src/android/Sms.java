@@ -55,7 +55,7 @@ public class Sms extends CordovaPlugin {
 			if (isIntent || (hasPermissionSendSms() && hasPermissionReadPhoneState())) {
 				sendSMS();
 			} else {
-				requestPermission(SEND_SMS_REQ_CODE);
+				return false;
 			}
 			return true;
 		}
