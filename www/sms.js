@@ -42,23 +42,43 @@ sms.send = function(phone, message, options, success, failure) {
     );
 };
 
-sms.hasPermission = function(success, failure) {
+sms.hasPermissionSendSms = function(success, failure) {
     // fire
     exec(
         success,
         failure,
         'Sms',
-        'has_permission', []
+        'has_permission_send_sms', []
     );
 };
 
-sms.requestPermission = function(success, failure) {
+sms.hasPermissionReadPhoneState = function(success, failure) {
     // fire
     exec(
         success,
         failure,
         'Sms',
-        'request_permission', []
+        'has_permission_read_phone_state', []
+    );
+};
+
+sms.requestPermissionSendSms = function(success, failure) {
+    // fire
+    exec(
+        success,
+        failure,
+        'Sms',
+        'request_permission_send_sms', []
+    );
+};
+
+sms.requestPermissionReadPhoneState = function(success, failure) {
+    // fire
+    exec(
+        success,
+        failure,
+        'Sms',
+        'request_permission_read_phone_state', []
     );
 };
 
