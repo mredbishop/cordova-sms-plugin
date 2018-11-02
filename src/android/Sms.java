@@ -23,14 +23,16 @@ public class Sms extends CordovaPlugin {
 
 	public final String ACTION_SEND_SMS = "send";
 
-	public final String ACTION_HAS_PERMISSION = "has_permission";
-	
-	public final String ACTION_REQUEST_PERMISSION = "request_permission";
+	public final String ACTION_HAS_PERMISSION_SEND_SMS = "has_permission_send_sms";
 
+	public final String ACTION_HAS_PERMISSION_READ_PHONE_STATE = "has_permission_read_phone_state";
+
+	public final String ACTION_REQUEST_PERMISSION_SEND_SMS = "request_permission_send_sms";
+
+	public final String ACTION_REQUEST_PERMISSION_READ_PHONE_STATE = "request_permission_read_phone_state";
+	
 	private static final String INTENT_FILTER_SMS_SENT = "SMS_SENT";
 	
-	private static final String INTENT_FILTER_READ_PHONE_STATE = "READ_PHONE_STATE";
-
 	private static final int SEND_SMS_REQ_CODE = 0;
 
 	private static final int REQUEST_PERMISSION_REQ_CODE = 1;
@@ -57,23 +59,38 @@ public class Sms extends CordovaPlugin {
 			}
 			return true;
 		}
-		else if (action.equals(ACTION_HAS_PERMISSION)) {
-			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, hasPermission()));
+		else if (action.equals(ACTION_HAS_PERMISSION_SEND_SMS)) {
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, hasPermissionSendSms()));
 			return true;
 		}
-		else if (action.equals(ACTION_REQUEST_PERMISSION)) {
-			requestPermission(REQUEST_PERMISSION_REQ_CODE);
+		else if (action.equals(ACTION_HAS_PERMISSION_READ_PHONE_STATE)) {
+			callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, hasPermissionReadPhoneState()));
+			return true;
+		}
+		else if (action.equals(ACTION_REQUEST_PERMISSION_SEND_SMS)) {
+			requestPermissionSendSms(REQUEST_PERMISSION_REQ_CODE);
+			return true;
+		}
+		else if (action.equals(ACTION_REQUEST_PERMISSION_READ_PHONE_STATE)) {
+			requestPermissionReadPhoneState(REQUEST_PERMISSION_REQ_CODE);
 			return true;
 		}
 		return false;
 	}
 
-	private boolean hasPermission() {
-		return cordova.hasPermission(android.Manifest.permission.SEND_SMS) && cordova.hasPermission(android.Manifest.permission.READ_PHONE_STATE);
+	private boolean hasPermissionSendSms() {
+		return cordova.hasPermission(android.Manifest.permission.SEND_SMS);
 	}
 
-	private void requestPermission(int requestCode) {
+	private boolean hasPermissionReadPhoneState() {
+		return cordova.hasPermission(android.Manifest.permission.READ_PHONE_STATE);
+	}
+	
+	private void requestPermissionSendSms(int requestCode) {
 		cordova.requestPermission(this, requestCode, android.Manifest.permission.SEND_SMS);
+	}
+
+	private void requestPermissionReadPhoneState(int requestCode) {
 		cordova.requestPermission(this, requestCode, android.Manifest.permission.READ_PHONE_STATE);
 	}
 
