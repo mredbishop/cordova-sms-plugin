@@ -28,6 +28,8 @@ public class Sms extends CordovaPlugin {
 	public final String ACTION_REQUEST_PERMISSION = "request_permission";
 
 	private static final String INTENT_FILTER_SMS_SENT = "SMS_SENT";
+	
+	private static final String INTENT_FILTER_READ_PHONE_STATE = "READ_PHONE_STATE";
 
 	private static final int SEND_SMS_REQ_CODE = 0;
 
@@ -67,11 +69,12 @@ public class Sms extends CordovaPlugin {
 	}
 
 	private boolean hasPermission() {
-		return cordova.hasPermission(android.Manifest.permission.SEND_SMS);
+		return cordova.hasPermission(android.Manifest.permission.SEND_SMS) && cordova.hasPermission(android.Manifest.permission.READ_PHONE_STATE);
 	}
 
 	private void requestPermission(int requestCode) {
 		cordova.requestPermission(this, requestCode, android.Manifest.permission.SEND_SMS);
+		cordova.requestPermission(this, requestCode, android.Manifest.permission.READ_PHONE_STATE);
 	}
 
 	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
