@@ -52,7 +52,7 @@ public class Sms extends CordovaPlugin {
 			} catch (NullPointerException npe) {
 				// It might throw a NPE, but it doesn't matter.
 			}
-			if (isIntent || hasPermission()) {
+			if (isIntent || (hasPermissionSendSms() && hasPermissionReadPhoneState())) {
 				sendSMS();
 			} else {
 				requestPermission(SEND_SMS_REQ_CODE);
